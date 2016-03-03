@@ -1,16 +1,14 @@
 <?php
 
-namespace IosafeAdmin;
+namespace WebSight;
 
-if (!defined( 'DEBUG' )) define( 'DEBUG', true );
-define( 'ONEDAY', 60 * 60 * 24 );
-define( 'ONEWEEK', ONEDAY * 7 );
-
+/*
 require_once 'MissingFields.php';
 require_once 'javascript.php';
 require_once 'HTML.php';
-require_once 'HTML-wrappers.php';
 require_once 'mediaServer.php';
+*/
+require_once 'HTML-wrappers.php';
 
 
 function cmdLine()
@@ -63,12 +61,6 @@ function findFiles( $pattern )
 	}
 
 	return $files;
-}
-
-
-function streq( $s1, $s2 )
-{
-	return ($s1 == $s2);
 }
 
 
@@ -224,16 +216,14 @@ EOF;
 
 function redirect( $location, $printOnly = false )
 {
-	if ($printOnly)
-	{
+	if ($printOnly) {
 		print a( "Redirect: $location", 'href=' . $location );
 		exit;
 	}
 
 	//writeLog( "Redirecting to $location" );
 
-	if (headers_sent() === FALSE)
-	{
+	if (headers_sent() === false) {
 		header( "HTTP/1.1 301 See Other" );
 		header( "Location: $location" );
 	}
@@ -1885,317 +1875,6 @@ function isUSAZipCode( $zip )
 {
 	return 
 		preg_match( "/^\d\d\d\d\d(-\d\d\d\d)?$/", $zip );
-}
-
-
-abstract class DateRange
-{
-	const _FIRST = 1;
-
-	const LAST_2 = 1;
-	const LAST_30 = 2;
-	const LAST_7 = 3;
-	const LAST_MONTH = 4;
-	const LAST_PAY_PERIOD = 5;
-	const LAST_QUARTER = 6;
-	const LAST_YEAR = 7;
-	const MONTH_TO_DATE = 8;
-	const PAY_PERIOD_BEFORE_LAST = 9;
-	const QUARTER_TO_DATE = 10;
-	const THIS_MONTH = 11;
-	const THIS_PAY_PERIOD = 12;
-	const THIS_YEAR = 13;
-	const YEAR_TO_DATE = 14;
-	const TODAY = 15;
-
-	const _LAST = 15;
-};
-
-// week is Monday through Sunday
-function getDateRange( $dateRange )
-{
-	//assert( '$dateRange >= DateRange::_FIRST and $dateRange <= DateRange::_LAST' );
-
-	$weekStartStr = "Monday";
-	$weekStart = 1;
-	$weekStopStr = "Sunday";
-	$weekStop = 0;
-
-	$userTime = time();
-
-	$date = date( 'w d', $userTime );
-	preg_match( "/^(.*) (.*)$/", $date, $matches );
-	$wday = $matches[1];
-	$mday = $matches[2];
-
-	if ($dateRange == DateRange::TODAY)
-	{
-		$from = date( "Y-m-d", $userTime );
-		$to = date( "Y-m-d", $userTime );
-	}
-	elseif ($dateRange == DateRange::LAST_2)
-	{
-		$from = date( "Y-m-d", $userTime - ONEDAY * 1 );
-		$to = date( "Y-m-d", $userTime );
-	}
-	elseif ($dateRange == DateRange::LAST_7)
-	{
-		$from = date( "Y-m-d", $userTime - ONEDAY * 8 );
-		$to = date( "Y-m-d", $userTime );
-	}
-	elseif ($dateRange == DateRange::LAST_30)
-	{
-		$from = date( "Y-m-d", $userTime - ONEDAY * 31 );
-		$to = date( "Y-m-d", $userTime );
-	}
-	elseif ($dateRange == DateRange::THIS_PAY_PERIOD or $dateRange == DateRange::PAY_PERIOD_BEFORE_LAST)
-	{
-		$from = date( "Y-m-d", $userTime );
-		$to = date( "Y-m-d", $userTime );
-	}
-	elseif ($dateRange == DateRange::LAST_PAY_PERIOD)
-	{
-		if ($mday <= 15)
-		{
-			$from = date( "Y-m-d", $userTime - ONEDAY * 20 );
-			$to = $from;
-		}
-		else
-		{
-			$from = date( "Y-m-d", $userTime );
-			$to = $from;
-		}
-	}
-	else
-	{
-		$from = date( "Y-m-d", $userTime );
-		$to = date( "Y-m-d", $userTime );
-	}
-
-	preg_match( "/(.*)-(.*)-(.*)/", $from, $matches );
-	$fromyear = $matches[1];
-	$frommonth = $matches[2];
-	$fromday = $matches[3];
-
-	preg_match( "/(.*)-(.*)-(.*)/", $to, $matches );
-	$toyear = $matches[1];
-	$tomonth = $matches[2];
-	$today = $matches[3];
-
-	if ($dateRange == DateRange::THIS_MONTH)
-	{
-		$fromday = '01';
-		$today = getDaysInMonth2( $toyear, $tomonth );
-	}
-	elseif ($dateRange == DateRange::MONTH_TO_DATE)
-	{
-		$fromday = '01';
-	}
-	elseif ($dateRange == DateRange::LAST_MONTH)
-	{
-		$frommonth--;
-		$tomonth--;
-
-		$fromday = '01';
-		$today = getDaysInMonth2( $toyear, $tomonth );
-	}
-	elseif ($dateRange == DateRange::THIS_PAY_PERIOD or $dateRange == DateRange::PAY_PERIOD_BEFORE_LAST)
-	{
-		if ($dateRange == DateRange::PAY_PERIOD_BEFORE_LAST)
-		{
-			$frommonth--;
-			$tomonth--;
-		}
-
-		if ($mday <= 15)
-		{
-			$fromday = '01';
-			$today = '15';
-		}
-		else
-		{
-			$fromday = '16';
-			$today = getDaysInMonth2( $toyear, $tomonth );
-		}
-	}
-	elseif ($dateRange == DateRange::LAST_PAY_PERIOD)
-	{
-		if ($mday <= 15)
-		{
-			$fromday = '16';
-			$today = getDaysInMonth2( $toyear, $tomonth );
-		}
-		else
-		{
-			$fromday = '01';
-			$today = '15';
-		}
-	}
-	elseif ($dateRange == DateRange::THIS_YEAR or $dateRange == DateRange::LAST_YEAR)
-	{
-		$fromday = '01';
-		$frommonth = '01';
-		$today = '31';
-		$tomonth = '12';
-	}
-	elseif ($dateRange == DateRange::YEAR_TO_DATE)
-	{
-		$fromday = '01';
-		$frommonth = '01';
-	}
-	elseif ($dateRange == DateRange::LAST_QUARTER)
-	{
-		if ($frommonth >= 10) 
-		{
-			$frommonth = 7;
-			$tomonth = 9;
-		}
-		elseif ($frommonth >= 7)
-		{
-			$frommonth = 4;
-			$tomonth = 6;
-		}
-		elseif ($frommonth >= 4)
-		{
-			$frommonth = 1;
-			$tomonth = 3;
-		}
-		elseif ($frommonth >= 1)
-		{
-			$frommonth = 10;
-			$tomonth = 12;
-			$fromyear--;
-			$toyear--;
-		}
-
-		$fromday = 1;
-		$today = getDaysInMonth2( $toyear, $tomonth );
-	}
-	elseif ($dateRange == DateRange::QUARTER_TO_DATE)
-	{
-		if ($frommonth >= 10) 
-		{
-			$frommonth = 10;
-		}
-		elseif ($frommonth >= 7)
-		{
-			$frommonth = 7;
-		}
-		elseif ($frommonth >= 4)
-		{
-			$frommonth = 4;
-		}
-		elseif ($frommonth >= 1)
-		{
-			$frommonth = 1;
-		}
-
-		$fromday = 1;
-	}
-
-	if ($dateRange == DateRange::LAST_YEAR)
-	{
-		$fromyear--;
-		$toyear--;
-	}
-
-	if ($frommonth < 1) 
-	{
-		$frommonth = 12 - $frommonth;
-		$fromyear--;
-	}
-
-	if ($tomonth < 1) 
-	{
-		$tomonth = 12 - $tomonth;
-		$toyear--;
-	}
-
-	$frommonth = sprintf( "%02d", $frommonth );
-	$fromday = sprintf( "%02d", $fromday );
-	$from = "$fromyear-$frommonth-$fromday";
-
-	$tomonth = sprintf( "%02d", $tomonth );
-	$today = sprintf( "%02d", $today );
-	$to = "$toyear-$tomonth-$today";
-
-	//print "$from to $to\n";
-
-	return array( 
-		$from, 
-		$fromyear, 
-		$frommonth, 
-		$fromday, 
-		$to, 
-		$toyear, 
-		$tomonth, 
-		$today 
-	);
-}
-
-
-function makeQuickDateButton( 
-	$dateRange, 
-	$text, 
-	$fromDateName = 'p_fromDate', 
-	$toDateName = 'p_toDate', 
-	$atts = '' 
-)
-{
-	list(
-		$from, 
-		$fromyear, 
-		$frommonth, 
-		$fromday, 
-		$to, 
-		$toyear, 
-		$tomonth, 
-		$today 
-	) = getDateRange( $dateRange );
-
-	return "<td><input type=button onClick=\"javascript:$('#$fromDateName').val( '$from' ); $('#$toDateName').val( '$to' ); \" value=\"$text\" style=\"width:120px\" $atts>";
-}
-
-
-function getDateRangeControlHTML(
-	$title,
-	$currentFromDate,
-	$currentToDate,
-	$fromDateName,
-	$toDateName
-)
-{
-	return
-		table(
-			tr( th( $title, 'colspan=3' ) ) .
-			tr(
-				td( 'From:' ) .
-				td( datepicker( $currentFromDate, $fromDateName ) ) .
-				"<td rowspan=2>" .
-				"<table border=0>\n" .
-				HTML::table( array( 'border' => 0, 'content' =>
-					tr(
-						makeQuickDateButton( DateRange::LAST_MONTH, "Last Month", $fromDateName, $toDateName ) .
-						makeQuickDateButton( DateRange::MONTH_TO_DATE, "Month To Date", $fromDateName, $toDateName )
-					) .
-
-					tr(
-						makeQuickDateButton( DateRange::LAST_QUARTER, "Last Quarter", $fromDateName, $toDateName ) .
-						makeQuickDateButton( DateRange::QUARTER_TO_DATE, "Quarter To Date", $fromDateName, $toDateName )
-					) .
-
-					tr(
-						makeQuickDateButton( DateRange::LAST_YEAR, "Last Year", $fromDateName, $toDateName ) .
-						makeQuickDateButton( DateRange::YEAR_TO_DATE, "Year To Date", $fromDateName, $toDateName )
-					)
-				) )
-			) .
-			tr(
-				"<td>To:
-				<td>" . datepicker( $currentToDate, $toDateName )
-			)
-		)
-	;
 }
 
 

@@ -2,14 +2,18 @@
 
 namespace WebSight;
 
+require_once 'utilities.php';
+
 const DATATABLES_JS = '//cdn.datatables.net/s/dt/dt-1.10.10/datatables.min.js';
+const DATATABLE_CLASS = 'websightDatatable';
+const TABLE_CLASSES = 'table table-bordered ' . DATATABLE_CLASS;
 
 function dataTableInit()
 {
 	JS::addJSFile( DATATABLES_JS );
 
 	JS::addToDocumentReady( '
-		$("table.kollabra-datatable").dataTable( {
+		$("table.' . DATATABLE_CLASS . '").dataTable( {
 			searching: false,
 			stateSave: true,
 			paging: false,
@@ -52,7 +56,7 @@ function dataTable(
 			dataTableFeet( $feet ) .
 			dataTableBody( $rows )
 			,
-			DATATABLE_CLASSES . " id='$tableId'"
+			"class='" . TABLE_CLASSES . "' id='$tableId'"
 		);
 }
 
