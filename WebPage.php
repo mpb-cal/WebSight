@@ -16,6 +16,8 @@ class WebPage
 
 	public function output()
 	{
+		$this->addToBody( JS::makeJS() );
+
 		print
 			'<!DOCTYPE html>' . NL
 			. html(
@@ -41,6 +43,18 @@ class WebPage
 	public function addToHead( $html = '' )
 	{
 		$this->head .= $html;
+	}
+
+
+	public function addMeta( $name = '', $content = '' )
+	{
+		$this->addToHead( meta( '', "name='$name' content='$content'" ) );
+	}
+
+
+	public function setTitle( $title = '' )
+	{
+		$this->addToHead( title( $title ) );
 	}
 
 

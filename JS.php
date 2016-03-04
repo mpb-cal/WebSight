@@ -28,11 +28,11 @@ class JS
 	}
 
 
-	static public function makeJS( $page )
+	static public function makeJS()
 	{
 		return
 			NL . NL
-			. self::makeJSFiles( $page )
+			. self::makeJSFiles()
 			. NL . script( self::$js )
 			. NL . script( NL . "jQuery(function($) { " . self::$documentReady . " });" . NL )
 			. NL . NL
@@ -40,7 +40,7 @@ class JS
 	}
 
 
-	static private function makeJSFiles( $page )
+	static private function makeJSFiles()
 	{
 		return
 			self::$jsFiles
