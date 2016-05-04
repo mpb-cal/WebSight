@@ -2,10 +2,11 @@
 
 namespace WebSight;
 
-//define( 'LOG_SQL', false );
 define( 'SHOW_SQL', false );
 define( 'SHOW_SQL_RESULTS', false );
 define( 'FETCH_STYLE', \PDO::FETCH_BOTH );
+
+// a wrapper class for database queries
 
 class DB
 {
