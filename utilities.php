@@ -2,13 +2,8 @@
 
 namespace WebSight;
 
-/*
-require_once 'MissingFields.php';
-require_once 'javascript.php';
-require_once 'HTML.php';
-require_once 'mediaServer.php';
-*/
-require_once 'HTML-wrappers.php';
+require_once 'HTML-wrappers-atts-first.php';
+require_once 'bootstrap.php';
 
 
 function cmdLine()
@@ -102,8 +97,8 @@ function mk_array_reverse( $arr )
 }
 
 
-// returns an array of filenames (without the full path)
-function readDirectory( $dir ) 
+// returns an array of filenames (with or without the full path)
+function readDirectory( $dir, $withPath = false ) 
 {
 	$filenames = array();
 
@@ -119,7 +114,7 @@ function readDirectory( $dir )
 			if ($file == '.') continue;
 			if ($file == '..') continue;
 
-			$filenames[] = $file;
+			$filenames[] = ($withPath ? "$dir/" : '') . $file;
 		}
 
 		closedir( $dh );
@@ -1334,14 +1329,14 @@ function objText( $o )
 
 function printObj( $o )
 {
-	if (DEBUG) {
+	//if (DEBUG) {
 		print
 			pre(
-				objText( $o )
-				, 'style="white-space: pre-wrap; "'
+				'style="white-space: pre-wrap; "'
+				, objText( $o )
 			)
 		;
-	}
+	//}
 }
 
 
@@ -1676,7 +1671,7 @@ function csvRow( $fields = array() )
 
 	if (!$fields) return;
 
-	array_walk( $fields, 'IosafeAdmin\\remNL' );
+	array_walk( $fields, 'WebSight\\remNL' );
 
 	$fp = fopen( 'php://output', 'a' );
 	fputcsv( $fp, $fields );

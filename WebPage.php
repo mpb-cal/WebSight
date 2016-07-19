@@ -2,6 +2,10 @@
 
 namespace WebSight;
 
+require_once __DIR__ . '/JS.php';
+
+define( 'NL', "\n" );
+
 class WebPage
 {
 	private $body = '';
@@ -10,7 +14,7 @@ class WebPage
 
 	public function __construct()
 	{
-		$this->addToHead( meta( '', "charset='UTF-8'" ) . NL );
+		$this->addToHead( meta( "charset='UTF-8'" ) . NL );
 	}
 
 
@@ -20,9 +24,9 @@ class WebPage
 
 		print
 			'<!DOCTYPE html>' . NL
-			. html(
-				head( $this->head )
-				. body( $this->body, $this->bodyAtts )
+			. html( 'class="no-js" lang=""',
+				head( '', $this->head )
+				. body( $this->bodyAtts, $this->body )
 			)
 		;
 	}
@@ -48,13 +52,13 @@ class WebPage
 
 	public function addMeta( $name = '', $content = '' )
 	{
-		$this->addToHead( meta( '', "name='$name' content='$content'" ) );
+		$this->addToHead( meta( "name='$name' content='$content'" ) );
 	}
 
 
 	public function setTitle( $title = '' )
 	{
-		$this->addToHead( title( $title ) );
+		$this->addToHead( title( '', $title ) );
 	}
 
 
@@ -62,7 +66,6 @@ class WebPage
 	{
 		$this->addToHead(
 			link_(
-				'',
 				"rel='stylesheet' href='$href' type='text/css' media='all'"
 			)
 			. NL

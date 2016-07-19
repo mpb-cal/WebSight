@@ -22,7 +22,7 @@ function element( $name, $contents = '', $atts = '', $end_tag = true )
 		$contents = "" . $contents . "";
 	}
 
-	return "<$name$atts>" . $contents . ($end_tag ? "</$name>" : "") . "";
+	return "<$name$atts>" . $contents . ($end_tag ? "</$name>" : "") . "\n";
 }
 
 

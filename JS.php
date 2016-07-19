@@ -2,7 +2,6 @@
 
 namespace WebSight;
 
-require_once 'HTML-wrappers.php';
 
 class JS
 {
