@@ -11,6 +11,7 @@ class WebPage
 	private $body = '';
 	private $bodyAtts = '';
 	private $head = '';
+	private $title = '';
 
 	public function __construct()
 	{
@@ -21,6 +22,7 @@ class WebPage
 	public function output()
 	{
 		$this->addToBody( JS::makeJS() );
+		$this->addToHead( title( '', $this->title ) );
 
 		print
 			'<!DOCTYPE html>' . NL
@@ -58,7 +60,7 @@ class WebPage
 
 	public function setTitle( $title = '' )
 	{
-		$this->addToHead( title( '', $title ) );
+		$this->title = $title;
 	}
 
 
