@@ -32,8 +32,8 @@ class JS
 		return
 			NL . NL
 			. self::makeJSFiles()
-			. NL . script( self::$js )
-			. NL . script( NL . "jQuery(function($) { " . self::$documentReady . " });" . NL )
+			. NL . script( '', self::$js )
+			. NL . script( '', NL . "jQuery(function($) { " . self::$documentReady . " });" . NL )
 			. NL . NL
 		;
 	}
@@ -50,7 +50,7 @@ class JS
 	static private function makeJSFile( $filename )
 	{
 		return
-			script( '', "src='$filename'" ) . NL
+			script( "src='$filename'" ) . NL
 		;
 	}
 
