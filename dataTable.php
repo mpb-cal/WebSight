@@ -3,12 +3,14 @@
 namespace WebSight;
 
 require_once 'utilities.php';
+require_once 'WebPage.php';
 
-const DATATABLES_JS = '//cdn.datatables.net/s/dt/dt-1.10.10/datatables.min.js';
+const DATATABLES_CSS = '//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.css';
+const DATATABLES_JS = '//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.js';
 const DATATABLE_CLASS = 'websightDatatable';
-const TABLE_CLASSES = 'table table-bordered ' . DATATABLE_CLASS;
+const TABLE_CLASSES = 'table table-bordered compact order-column ' . DATATABLE_CLASS;
 
-function dataTableInit()
+function dataTableInit( WebPage $webPage )
 {
 	JS::addJSFile( DATATABLES_JS );
 
@@ -21,6 +23,8 @@ function dataTableInit()
 		} );
 		'
 	);
+
+	$webPage->addStyleSheet( DATATABLES_CSS );
 }
 
 /*
@@ -33,37 +37,35 @@ function dataTable(
 	$feet, 
 	$rows, 
 	$csv = false, 
-	$tableId = ''
+	$tableId = '',
+	$tableClasses = ''
 )
 {
 	if ($csv) {
-		$rc = '';
-
+		ob_start();
 		if ($heads) {
-			$rc .= csvRow( $heads );
+			csvRow( $heads );
 		}
 
 		foreach ($rows as $cells) {
-			$rc .= csvRow( $cells );
+			csvRow( $cells );
 		}
 
-		return $rc;
+		return ob_get_clean();
 	}
 
 	return
-		table(
+		table( "class='" . TABLE_CLASSES . ' ' . $tableClasses . "' id='$tableId'",
 			dataTableHead( $heads ) .
 			dataTableFeet( $feet ) .
 			dataTableBody( $rows )
-			,
-			"class='" . TABLE_CLASSES . "' id='$tableId'"
 		);
 }
 
 function dataTableHead( $heads )
 {
 	if ($heads) {
-		return thead( tr( th( $heads ) ) );
+		return thead( '', tr( '', th( '', $heads ) ) );
 	}
 
 	return '';
@@ -73,7 +75,7 @@ function dataTableBody( $rows )
 {
 	$body = '';
 	if ($rows) foreach ($rows as $row) {
-		$body .= tr( td( $row ) );
+		$body .= tr( '', td( '', $row ) );
 	}
 	return $body;
 }
@@ -81,7 +83,7 @@ function dataTableBody( $rows )
 function dataTableFeet( $feet )
 {
 	if ($feet) {
-		return tfoot( tr( th( $feet ) ) );
+		return tfoot( '', tr( '', th( '', $feet ) ) );
 	}
 
 	return '';

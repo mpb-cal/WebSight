@@ -19,14 +19,14 @@ class WebPage
 	}
 
 
-	public function output()
+	public function getOutput()
 	{
 		$this->addToBody( JS::makeJS() );
 		$this->addToHead( title( '', $this->title ) );
 
-		print
+		return
 			'<!DOCTYPE html>' . NL
-			. html( 'class="no-js" lang=""',
+			. html( 'class="" lang=""',	// no-js replaced with js by modernizr?
 				head( '', $this->head )
 				. body( $this->bodyAtts, $this->body )
 			)
@@ -72,6 +72,18 @@ class WebPage
 			)
 			. NL
 		);
+	}
+
+
+	public function setNoCache()
+	{
+		foreach ([
+			["cache-control", "no-cache"],	// no-store?
+			["expires", "0"],
+			["pragma", "no-cache"],
+		] as $meta) {
+			$this->addToHead( meta( "http-equiv='$meta[0]' content='$meta[1]'" ) );
+		}
 	}
 }
 

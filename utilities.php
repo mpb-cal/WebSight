@@ -6,6 +6,14 @@ require_once 'HTML-wrappers-atts-first.php';
 require_once 'bootstrap.php';
 
 
+function sendNoCacheHeaders()
+{
+	header( "Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0" );
+	header( "Pragma: no-cache" );
+	header( "Expires: Sat, 26 Jul 1997 05:00:00 GMT" );
+}
+
+
 function cmdLine()
 {
 	global $argc;
@@ -967,7 +975,9 @@ function makeSQLDate( $anydate )
 
 function startPlaintextOutput( $attachmentName = '', $contentType = 'text/plain' )
 {
-	if (headers_sent()) return;
+	if (headers_sent()) {
+		return;
+	}
 
 	header( 'Pragma: public' );
 	header( 'Expires: 0' );
@@ -976,8 +986,7 @@ function startPlaintextOutput( $attachmentName = '', $contentType = 'text/plain'
 
 	header( "Content-type: $contentType" );
 
-	if ($attachmentName)
-	{
+	if ($attachmentName) {
 		header( "Content-Disposition: attachment; filename=\"$attachmentName\"" );
 	}
 }
@@ -994,16 +1003,18 @@ function getMIMEType( $file )
 
 function outputFile( $file, $asAttachment = true )
 {
-	if (headers_sent()) return false;
-
-	if (!file_exists( $file )) return false;
-
-	if ($asAttachment)
-	{
-		startPlaintextOutput( basename( $file ), 'text/plain' );
+	if (headers_sent()) {
+		return false;
 	}
-	else
-	{
+
+	if (!file_exists( $file )) {
+		return false;
+	}
+
+	if ($asAttachment) {
+		//startPlaintextOutput( basename( $file ), 'text/plain' );
+		startPlaintextOutput( basename( $file ), getMIMEType( $file ) );
+	} else {
 		startPlaintextOutput( '', getMIMEType( $file ) );
 	}
 
@@ -1550,7 +1561,7 @@ function unsetSessionVar( $name )
 // use to escape output
 function esc( $str )
 {
-	return htmlentities( $str, ENT_QUOTES );//, 'UTF-8' );
+	return htmlentities( $str, ENT_QUOTES, 'UTF-8' );
 }
 
 
