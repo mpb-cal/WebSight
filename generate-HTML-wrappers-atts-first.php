@@ -70,7 +70,7 @@ hr				required		empty		no
 html			optional		optional	no
 i				required		required	no
 iframe		required		required	no
-img			required		empty		yes
+img			required		empty		no
 input			required		empty		no
 ins			required		required	no
 kbd			required		required	no
@@ -88,7 +88,7 @@ noscript		required		required	no
 object		required		required	no
 ol				required		required	no
 optgroup		required		optional	no
-option		required		optional	yes
+option		required		optional	no
 output		required		required	no
 p				required		optional	no
 param			required		empty		no
@@ -101,7 +101,7 @@ ruby			required		required	no
 samp			required		required	no
 script		required		required	no
 section		required		required	no
-select		required		required	yes
+select		required		required	no
 small			required		required	no
 source		required		empty		no
 span			required		required	no

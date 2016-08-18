@@ -2,7 +2,7 @@
 
 namespace WebSight;
 
-require_once 'HTML-wrappers-atts-first.php';
+require_once 'HTML-wrappers.php';
 require_once 'bootstrap.php';
 
 
@@ -753,7 +753,7 @@ function hrefPopup( $text, $url, $width = 500, $height = 500, $style = '' )
 }
 
 
-function option( $value, $current )
+function makeOption( $value, $current )
 {
 	$selected = '';
 	if ($value == $current) $selected = 'selected';
@@ -792,13 +792,13 @@ function radio( $name, $value, $current, $atts = '', $label = '' )
 
 
 // options = array( value, value, value )
-function select( $name, $options = array(), $current = '', $atts = '' )
+function makeSelect( $name, $options = array(), $current = '', $atts = '' )
 {
 	$text = "<select name=\"$name\" id=\"$name\" $atts>\n";
 
 	if ($options) foreach ($options as $o)
 	{
-		$text .= option( $o, $current );
+		$text .= makeOption( $o, $current );
 	}
 
 	$text .= "</select>\n";
@@ -884,8 +884,8 @@ function selectWithOther( $name, $options, $value, $atts = '' )
 
 	$text .= "<select name='$name' id='$name' $atts>";
 	if ($options) foreach ($options as $o)
-		$text .= option( $o, $value );
-	$text .= option( 'Other:', $value );
+		$text .= makeOption( $o, $value );
+	$text .= makeOption( 'Other:', $value );
 	$text .= "</select>";
 	$otherName = "{$name}_other";
 	$text .= "<input name='$otherName' id='$otherName' value='$otherValue' disabled>";
@@ -915,8 +915,8 @@ function makeSelectWithOther( $options, $name, $otherName, $selectValue, $otherV
 
 	$text .= "<select $extraOnChange\"  name=\"$name\" id=\"$name\">";
 	if ($options) foreach ($options as $o)
-		$text .= option( $o, $selectValue );
-	$text .= option( 'Other:', $selectValue );
+		$text .= makeOption( $o, $selectValue );
+	$text .= makeOption( 'Other:', $selectValue );
 	$text .= "</select>";
 	$text .= "<input name=\"$otherName\" id=\"$otherName\" value=\"$otherValue\" size=30 disabled>";
 
@@ -1559,6 +1559,7 @@ function esc( $str )
 }
 
 
+/*
 function img( $src, $atts = '' )
 {
 	return awsImg( $src, $atts );
@@ -1573,6 +1574,7 @@ function img( $src, $atts = '' )
 		return "<img src=\"$src\" $wh $atts>";
 	}
 }
+*/
 
 
 function sortByIndex( &$array, $index )
