@@ -941,22 +941,9 @@ EOF;
 
 function checkbox( $name, $isChecked = 0, $label = '', $atts = '' )
 {
-/*
-	$text = input(
-		'',
-		"type=checkbox name='$name' id='$name' $atts " . ($isChecked ? 'checked' : '')
-	);
-
-	if ($label) {
-		$text .= label( $label, "for='$name' class='control-label'" );
-	}
-
-	return $text;
-*/
 	return
-		label(
+		label( '',
 			input(
-				'',
 				"type=checkbox name='$name' id='$name' $atts " . ($isChecked ? 'checked' : '')
 			)
 			. NL
@@ -1340,6 +1327,11 @@ function objText( $o )
 
 function printObj( $o )
 {
+	if (cmdLine()) {
+		print objText( $o );
+		return;
+	}
+
 	//if (DEBUG) {
 		print
 			pre(
@@ -1434,6 +1426,7 @@ function setSessionVarLink( $varName, $value, $text )
 }
 
 
+/*
 function saveCheckboxValue( $name )
 {
 	if (isset( $GLOBALS["p_$name"] )) $_SESSION[$name] = 1;
@@ -1556,6 +1549,7 @@ function unsetSessionVar( $name )
 {
 	unset( $_SESSION[$name] );
 }
+*/
 
 
 // use to escape output
@@ -1711,6 +1705,7 @@ function tableRow()
 }
 
 
+/*
 function saveInputAsSessionVars( $varNames )
 {
 	foreach ($varNames as $varName)
@@ -1780,6 +1775,7 @@ function saveCheckboxInputAsSessionVars( $varNames )
 		else $_SESSION[$varName] = 0;
 	}
 }
+*/
 
 
 function getArrayValue( $arr, $key ) 
@@ -1884,6 +1880,7 @@ function isUSAZipCode( $zip )
 }
 
 
+/*
 function requireFields( $fields )
 {
 	$error = '';
@@ -1899,11 +1896,13 @@ function requireFields( $fields )
 
 	if ($error)
 	{
-		userError( $error );
+		Flash::userMessage( $error );
 	}
 }
+*/
 
 
+/*
 function requirePostFields( $fields )
 {
 	$error = '';
@@ -1921,9 +1920,10 @@ function requirePostFields( $fields )
 
 	if ($error)
 	{
-		userError( $error );
+		Flash::userMessage( $error );
 	}
 }
+*/
 
 
 // for db rows

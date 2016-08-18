@@ -25,7 +25,10 @@ class Flash
 
 	public static function addToUserMessage( $msg )
 	{
-		self::$session->set( SV_USER_MESSAGE, sessionVar( SV_USER_MESSAGE ) . $msg . br() );
+		self::$session->set(
+			SV_USER_MESSAGE,
+			self::$session->get( SV_USER_MESSAGE ) . $msg . br()
+		);
 	}
 
 

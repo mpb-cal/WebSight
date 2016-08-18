@@ -33,7 +33,7 @@ class JS
 			NL . NL
 			. self::makeJSFiles()
 			. NL . script( '', self::$js )
-			. NL . script( '', NL . "jQuery(function($) { " . self::$documentReady . " });" . NL )
+			. NL . script( '', NL . "jQuery(function($) {" . NL . self::$documentReady . NL . "});" . NL )
 			. NL . NL
 		;
 	}

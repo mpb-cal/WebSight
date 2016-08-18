@@ -6,25 +6,29 @@ require_once 'utilities.php';
 require_once 'WebPage.php';
 
 const DATATABLES_CSS = '//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.css';
+const RESPONSIVE_CSS = '//cdn.datatables.net/responsive/2.1.0/css/responsive.dataTables.min.css';
 const DATATABLES_JS = '//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.js';
+const RESPONSIVE_JS = '//cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js';
 const DATATABLE_CLASS = 'websightDatatable';
-const TABLE_CLASSES = 'table table-bordered compact order-column ' . DATATABLE_CLASS;
+const TABLE_CLASSES = 'table table-bordered compact table-condensed order-column ' . DATATABLE_CLASS;
 
 function dataTableInit( WebPage $webPage )
 {
 	JS::addJSFile( DATATABLES_JS );
+	//JS::addJSFile( RESPONSIVE_JS );
 
 	JS::addToDocumentReady( '
 		$("table.' . DATATABLE_CLASS . '").dataTable( {
 			searching: false,
 			stateSave: true,
 			paging: false,
-			info: true
+			info: false
 		} );
 		'
 	);
 
 	$webPage->addStyleSheet( DATATABLES_CSS );
+	//$webPage->addStyleSheet( RESPONSIVE_CSS );
 }
 
 /*
@@ -89,10 +93,10 @@ function dataTableFeet( $feet )
 	return '';
 }
 
-function dataTableSetDefaultOrderColumn( $tableId, $column, $direction = 'asc' )
+function dataTableSetDefaultOrderColumn( Session $session, $tableId, $column, $direction = 'asc' )
 {
 	$SESSION_VAR = 'dataTableVisited';
-	$dataTableVisited = sessionArr( $SESSION_VAR, $tableId );
+	$dataTableVisited = $session->get_arr( $SESSION_VAR, $tableId );
 
 	if (!$dataTableVisited) {
 		$js = <<<EOF
@@ -103,8 +107,23 @@ EOF;
 
 		JS::addToDocumentReady( $js );
 
-		setSessionArr( $SESSION_VAR, $tableId, true );
+		$session->set_arr( $SESSION_VAR, $tableId, true );
 	}
+}
+
+
+// not working?
+function dataTableSetOption( $tableId, $optionName, $optionValue )
+{
+	$js = <<<EOF
+
+		$('table#$tableId').dataTable( {
+			$optionName: $optionValue
+		} );
+
+EOF;
+
+	JS::addToDocumentReady( $js );
 }
 
 

@@ -6,6 +6,10 @@ define( 'SHOW_SQL', false );
 define( 'SHOW_SQL_RESULTS', false );
 define( 'FETCH_STYLE', \PDO::FETCH_BOTH );
 
+if (!defined( 'DEBUG' )) {
+	define( 'DEBUG', true );
+}
+
 // a wrapper class for database queries
 
 class DB
@@ -14,11 +18,12 @@ class DB
 	private $host = null;
 	private $port = null;
 	private $dbname = null;
-	private $user = null;
-	private $pass = null;
+	protected $user = null;
+	protected $pass = null;
 	private $onError = null;
+	protected $pdoDriver = null;
 
-	public function __construct( $host, $port, $dbname, $user, $pass, $onError )
+	public function __construct( $host, $port, $dbname, $user, $pass, $onError, $pdoDriver = 'mysql' )
 	{
 		$this->host = $host;
 		$this->port = $port;
@@ -26,6 +31,8 @@ class DB
 		$this->user = $user;
 		$this->pass = $pass;
 		$this->onError = $onError;
+		$this->pdoDriver = $pdoDriver;
+
 		$this->pdo = $this->createPDO();
 	}
 
@@ -176,9 +183,9 @@ class DB
 	}
 
 	// private
-	private function createPDO()
+	protected function createPDO()
 	{
-		$dsn = "mysql:host=$this->host;port=$this->port;dbname=$this->dbname";
+		$dsn = "$this->pdoDriver:host=$this->host;port=$this->port;dbname=$this->dbname";
 
 		$pdo = 0;
 

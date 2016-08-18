@@ -54,10 +54,12 @@ class Session
 	}
 
 
+/*
 	public function value( $name )
 	{
 		return 'value="' . esc( $this->sessionVar( $name ) ) . '"';
 	}
+*/
 
 
 	public function unset_( $name )
