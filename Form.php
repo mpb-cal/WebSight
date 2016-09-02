@@ -9,11 +9,15 @@ use Symfony\Component\HttpFoundation\Request;
 // during initialization
 
 $myForm = new Form(
+	$session,
+	$request,
 	'myFormName',
 	[
 		'fname' => [ 'First Name', INPUT_TYPE_TEXT, true ],	// title, type, isRequired
 		'lname' => [ 'Last Name', INPUT_TYPE_TEXT, true ]
-	]
+	],
+	'url'	// redirect after post
+	'url'	// redirect if invalid
 );
 
 if ($myForm->wasSubmitted()) {
@@ -72,7 +76,8 @@ else
 }
 $INPUT_COLS = 7;
 $CURRENT_COLS = 3;
-$SUBMIT_COLS = $INPUT_COLS - 2;
+$SUBMIT_COLS = 4;
+$RESET_COLS = 1;
 
 
 class Form
@@ -82,12 +87,16 @@ class Form
 	private $m_showSubmitButton = true;
 	private $m_session = null;
 	private $m_request = null;
+	private $m_postRedirect = '';
+	private $m_invalidRedirect = '';
 
 	function __construct( 
 		Session $session,
 		Request $request,
-		$name,			// used to name the HTML elements
-		$fields			// each field is 'fieldName' => array( 'Title', INPUT_TYPE, isRequired )
+		$name,				// used to name the HTML elements
+		$fields,				// each field is 'fieldName' => array( 'Title', INPUT_TYPE, isRequired )
+		$postRedirect,		// URL to redirect to after the form is submitted
+		$invalidRedirect	// URL to redirect to if form is invalid or incomplete
 	)
 	{
 		global $STATE_TERRITORY_NAME;
@@ -96,6 +105,8 @@ class Form
 		$this->m_request = $request;
 		$this->m_name = $name;
 		$this->m_fields = array();
+		$this->m_postRedirect = $postRedirect;
+		$this->m_invalidRedirect = $invalidRedirect;
 
 		////////////////////////////
 		// give keys to fields array
@@ -136,30 +147,10 @@ class Form
 	}
 
 
-	private function checkForRequiredFields()
-	{
-		$error = '';
-
-		foreach ($this->m_fields as $name => $field) {
-			if ($field['required']) {
-				$inputName = $this->getInputName( $name );
-
-				if ($this->m_request->request->has( $this->getInputName( $inputName ) )) {
-					$error = "One or more required fields are missing.";
-					MissingFields::addMissing( $inputName );
-				}
-			}
-		}
-
-		if ($error) {
-			Flash::userMessage( $error );
-		}
-	}
-
-
 	private function handleSubmission()
 	{
 		if (!$this->wasSubmitted()) {
+			$this->loadFromSession();
 			return;
 		}
 
@@ -176,8 +167,6 @@ class Form
 				$this->getFieldSubmittedValue( $name )
 			);
 		}
-
-		$this->checkForRequiredFields();
 
 		if (SHOW_CURRENT_VALUE)
 		{
@@ -198,6 +187,31 @@ class Form
 
 			savePostInputAsSessionVars( $names );
 			saveCheckboxInputAsSessionVars( $cbNames );
+		}
+
+		$this->checkForRequiredFields();
+
+		redirect( $this->m_postRedirect );
+	}
+
+
+	private function checkForRequiredFields()
+	{
+		$error = '';
+
+		foreach ($this->m_fields as $name => $field) {
+			if ($field['required']) {
+				$inputName = $this->getInputName( $name );
+				if ($this->m_request->request->get( $inputName ) === '') {
+					$error = "One or more required fields are missing.";
+					MissingFields::addMissing( $inputName );
+				}
+			}
+		}
+
+		if ($error) {
+			Flash::userMessage( $error );
+			redirect( $this->m_invalidRedirect );
 		}
 	}
 
@@ -435,7 +449,16 @@ class Form
 
 	public function draw()
 	{
-		global $COL_SIZE, $LABEL_COLS, $SUBMIT_COLS, $CURRENT_COLS;
+		global $COL_SIZE, $LABEL_COLS, $SUBMIT_COLS, $RESET_COLS, $CURRENT_COLS;
+
+		JS::addToDocumentReady( '
+			$("button.reset").click( function() {
+				$(this).closest( "form" ).find( ":input" ).not(":button, :submit, :reset, :hidden").
+					removeAttr("checked").removeAttr("selected").
+						not(":checkbox, :radio, select").val("");
+				return false;
+			});
+		' );
 
 		return
 			form( 'class="form-horizontal" action="" method=post enctype="multipart/form-data"',
@@ -450,12 +473,19 @@ class Form
 					($this->m_showSubmitButton ?
 						div(
 							"class='col-$COL_SIZE-$SUBMIT_COLS" .
-							($this->hasRequiredFields() ? '' : " col-$COL_SIZE-offset-$LABEL_COLS") .
-							"'", 
+								($this->hasRequiredFields() ? '' : " col-$COL_SIZE-offset-" . ($LABEL_COLS+1)) .
+								"'", 
 							button(
 								"type=submit class='btn btn-primary btn-block' name='" . 
 									$this->getSubmitName() . "'",
 								"Submit" 
+							)
+						)
+						. div(
+							"class='col-$COL_SIZE-$RESET_COLS'",
+							button(
+								"class='reset btn btn-info btn-block'",
+								"Clear" 
 							)
 						)
 						:
@@ -484,7 +514,7 @@ class Form
 
 	public function wasSubmitted()
 	{
-		if (isset( $_POST[$this->getSubmitName()] )) return true;
+		if ($this->m_request->request->has( $this->getSubmitName() )) return true;
 		return false;
 	}
 
@@ -563,7 +593,7 @@ class Form
 	}
 
 
-	public function loadFromSession()
+	private function loadFromSession()
 	{
 		$names = [];
 		foreach ($this->m_fields as $name => $field) {

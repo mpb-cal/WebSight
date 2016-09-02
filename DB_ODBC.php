@@ -26,7 +26,7 @@ class DB_ODBC extends DB
 
 		$pdo = 0;
 
-		//pnl( "DSN: $dsn" );
+		pnl( "DSN: $dsn" );
 		try {
 			$pdo = new \PDO( $dsn, $this->user, $this->pass );
 		} catch (PDOException $e) {

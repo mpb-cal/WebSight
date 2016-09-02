@@ -14,13 +14,13 @@ if (!defined( 'DEBUG' )) {
 
 class DB
 {
-	private $pdo = null;
-	private $host = null;
-	private $port = null;
-	private $dbname = null;
+	protected $pdo = null;
+	protected $host = null;
+	protected $port = null;
+	protected $dbname = null;
 	protected $user = null;
 	protected $pass = null;
-	private $onError = null;
+	protected $onError = null;
 	protected $pdoDriver = null;
 
 	public function __construct( $host, $port, $dbname, $user, $pass, $onError, $pdoDriver = 'mysql' )
