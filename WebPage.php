@@ -22,7 +22,9 @@ class WebPage
 	public function getOutput()
 	{
 		$this->addToBody( JS::makeJS() );
-		$this->addToHead( title( '', $this->title ) );
+		if ($this->title) {
+			$this->addToHead( title( '', $this->title ) );
+		}
 
 		return
 			'<!DOCTYPE html>' . NL
