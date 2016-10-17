@@ -16,12 +16,12 @@ require_once 'DB.php';
 
 class DB_sqlite extends DB
 {
-	private $dbFilename = '';
+	protected $dbFilename = '';
 
 	public function __construct( $dbFilename, $onError = '' )
 	{
-		parent::__construct( '', '', '', '', '', $onError );
 		$this->dbFilename = $dbFilename;
+		parent::__construct( '', '', '', '', '', $onError );
 	}
 
 	protected function getDSN()
