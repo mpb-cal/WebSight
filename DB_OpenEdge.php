@@ -7,7 +7,7 @@ require_once 'DB.php';
 
 class DB_OpenEdge extends DB
 {
-	public function __construct( $host, $port, $dbname, $user, $pass, $onError )
+	public function __construct( $host, $port, $dbname, $user, $pass, $onError = '' )
 	{
 		parent::__construct( $host, $port, $dbname, $user, $pass, $onError );
 	}
