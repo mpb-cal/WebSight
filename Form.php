@@ -16,8 +16,8 @@ $myForm = new Form(
 		'fname' => [ 'First Name', INPUT_TYPE_TEXT, true ],	// title, type, isRequired
 		'lname' => [ 'Last Name', INPUT_TYPE_TEXT, true ]
 	],
-	'url'	// redirect after post
-	'url'	// redirect if invalid
+	'url',	// redirect after post
+	'url'		// redirect if invalid
 );
 
 if ($myForm->wasSubmitted()) {
@@ -514,6 +514,11 @@ class Form
 
 	public function wasSubmitted()
 	{
+/*
+		po( $this->m_request->request );
+		po( $this->getSubmitName() );
+		exit;
+*/
 		if ($this->m_request->request->has( $this->getSubmitName() )) return true;
 		return false;
 	}
