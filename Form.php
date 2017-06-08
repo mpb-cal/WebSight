@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /*
 
-// during initialization
+// during initialization (whether GET or POST)
 
 $myForm = new Form(
 	$session,
