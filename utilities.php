@@ -860,7 +860,7 @@ function selectWithOther2( $name, $options, $current, $atts = '', $otherAtts = '
 
 EOF;
 
-	addToDocumentReady( $js );
+	JS::addToDocumentReady( $js );
 
 	return
 		span(
@@ -903,7 +903,7 @@ function selectWithOther( $name, $options, $value, $atts = '' )
 
 EOF;
 
-	addToDocumentReady( $js );
+	JS::addToDocumentReady( $js );
 
 	return $text;
 }
@@ -933,7 +933,7 @@ function makeSelectWithOther( $options, $name, $otherName, $selectValue, $otherV
 
 EOF;
 
-	addToDocumentReady( $js );
+	JS::addToDocumentReady( $js );
 
 	return $text;
 }
@@ -1799,7 +1799,7 @@ function focusElement( $id )
 
 EOF;
 
-	addToDocumentReady( $js );
+	JS::addToDocumentReady( $js );
 }
 
 
