@@ -2,6 +2,7 @@
 
 namespace WebSight;
 
+require_once 'utilities.php';
 
 class JS
 {

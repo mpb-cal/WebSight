@@ -2142,7 +2142,15 @@ if (!function_exists('array_column')) {
 }
 
 
+function fa( $name )
+{
+	return i( "class='fa fa-$name'" );
+}
 
 
+function glyph( $name )
+{
+	return span( "class='glyphicon glyphicon-$name'" );
+}
 
 
