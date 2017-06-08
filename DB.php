@@ -23,7 +23,7 @@ class DB
 	protected $onError = null;
 	protected $pdoDriver = null;
 
-	public function __construct( $host, $port, $dbname, $user, $pass, $onError, $pdoDriver = 'mysql' )
+	public function __construct( $host, $port, $dbname, $user, $pass, $onError = '', $pdoDriver = 'mysql' )
 	{
 		$this->host = $host;
 		$this->port = $port;
@@ -34,6 +34,38 @@ class DB
 		$this->pdoDriver = $pdoDriver;
 
 		$this->pdo = $this->createPDO();
+	}
+
+	protected function getDSN()
+	{
+		return "$this->pdoDriver:host=$this->host;port=$this->port;dbname=$this->dbname";
+	}
+
+
+	protected function createPDO()
+	{
+		$pdo = 0;
+		$dsn = $this->getDSN();
+
+		try {
+			$pdo = new \PDO( $dsn, $this->user, $this->pass );
+		} catch (PDOException $e) {
+			return null;
+		}
+
+		if ($pdo) {
+			if (DEBUG) {
+				$pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING );
+			} else {
+				$pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_SILENT );
+			}
+
+			//$pdo->query( "set time_zone='US/Pacific'" );
+		} else {
+			return null;
+		}
+
+		return $pdo;
 	}
 
 	public function lastInsertId()
@@ -183,37 +215,11 @@ class DB
 	}
 
 	// private
-	protected function createPDO()
-	{
-		$dsn = "$this->pdoDriver:host=$this->host;port=$this->port;dbname=$this->dbname";
-
-		$pdo = 0;
-
-		try {
-			$pdo = new \PDO( $dsn, $this->user, $this->pass );
-		} catch (PDOException $e) {
-			return null;
-		}
-
-		if ($pdo) {
-			if (DEBUG) {
-				$pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING );
-			} else {
-				$pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_SILENT );
-			}
-
-			$pdo->query( "set time_zone='US/Pacific'" );
-		} else {
-			return null;
-		}
-
-		return $pdo;
-	}
-
-	// private
 	private function showSQLError( $sqlStatement )
 	{
-		$this->onError( "Error in SQL:\n$sqlStatement\n\n\n" );
+		if ($this->onError) {
+			$this->onError( "Error in SQL:\n$sqlStatement\n\n\n" );
+		}
 	}
 }
 
