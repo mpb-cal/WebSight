@@ -1,8 +1,6 @@
 # WebSight
 a website anti-framework
 
-No inversion of control here!
-
 Create a WebPage and pass it around, add stuff to it, then display it. CSS, JS, HEAD stuff, etc., can be added at any point.
 
 ```
