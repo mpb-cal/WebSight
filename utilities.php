@@ -1426,7 +1426,6 @@ function setSessionVarLink( $varName, $value, $text )
 }
 
 
-/*
 function saveCheckboxValue( $name )
 {
 	if (isset( $GLOBALS["p_$name"] )) $_SESSION[$name] = 1;
@@ -1549,7 +1548,6 @@ function unsetSessionVar( $name )
 {
 	unset( $_SESSION[$name] );
 }
-*/
 
 
 // use to escape output

@@ -87,7 +87,7 @@ class Form
 	private $m_showSubmitButton = true;
 	private $m_session = null;
 	private $m_request = null;
-	private $m_postRedirect = '';
+	//private $m_postRedirect = '';
 	private $m_invalidRedirect = '';
 
 	function __construct( 
@@ -95,7 +95,7 @@ class Form
 		Request $request,
 		$name,				// used to name the HTML elements
 		$fields,				// each field is 'fieldName' => array( 'Title', INPUT_TYPE, isRequired )
-		$postRedirect,		// URL to redirect to after the form is submitted
+		$postRedirect,		// URL to redirect to after the form is submitted (not used)
 		$invalidRedirect	// URL to redirect to if form is invalid or incomplete
 	)
 	{
@@ -105,7 +105,7 @@ class Form
 		$this->m_request = $request;
 		$this->m_name = $name;
 		$this->m_fields = array();
-		$this->m_postRedirect = $postRedirect;
+		//$this->m_postRedirect = $postRedirect;
 		$this->m_invalidRedirect = $invalidRedirect;
 
 		////////////////////////////
@@ -156,17 +156,10 @@ class Form
 
 		// save submitted values
 		foreach ($this->m_fields as $name => $field) {
-			$this->m_fields[$name]['value'] = $this->getFieldSubmittedValue( $name );
+			$this->setValue( $name, $this->getFieldSubmittedValue( $name ) );
 		}
 
-		// save form values to the session
-		foreach ($this->m_fields as $name => $field) {
-			$this->m_session->set_arr( 
-				$this->getSessionKey(), 
-				$name, 
-				$this->getFieldSubmittedValue( $name )
-			);
-		}
+    $this->saveValuesToSession();
 
 		if (SHOW_CURRENT_VALUE)
 		{
@@ -191,7 +184,7 @@ class Form
 
 		$this->checkForRequiredFields();
 
-		redirect( $this->m_postRedirect );
+		//redirect( $this->m_postRedirect );
 	}
 
 
@@ -619,6 +612,19 @@ class Form
 	}
 
 
+  public function saveValuesToSession()
+  {
+		// save form values to the session
+		foreach ($this->m_fields as $name => $field) {
+			$this->m_session->set_arr( 
+				$this->getSessionKey(), 
+				$name, 
+				$this->getFieldValue( $name )
+			);
+		}
+  }
+
+
 	// each option is array( value, text, atts )
 	// or just value if valueOnly
 	public function setSelectOptions( $name, $options = array(), $valueOnly = false )
@@ -645,6 +651,13 @@ class Form
 	}
 
 
+	public function setValue( $field, $value )
+	{
+    assert( 'isset( $this->m_fields[$name] )' );
+    $this->m_fields[$field]['value'] = $value;
+	}
+
+
 	public function setValues( $values )
 	{
 		foreach ($values as $name => $value)
@@ -653,6 +666,7 @@ class Form
 			$this->m_fields[$name]['value'] = $value;
 		}
 	}
+
 
 	public function setShowSubmitButton( $show )
 	{
