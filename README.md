@@ -48,3 +48,5 @@ renders as:
 </div>
 	
 ```
+First thing to do is 
+`php generate-HTML-wrappers-atts-first.php > HTML-wrappers.php`
