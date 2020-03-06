@@ -12,7 +12,8 @@ $webPage->addToBody( 'main body' );
 print $webPage->getOutput();
 ```
 
-HTML wrappers help you write HTML:
+HTML wrappers help you write HTML. It guarantees that your tags are closed and nested properly. There's a function corresponding to each HTML5 element. `div()`, `h3()`, `head()`, etc. Since `var` is a PHP keyword, the function for that tag has an underscore: `var_()`.
+
 ```
 $webPage->addToBody( 
 	div( 'class=row',
@@ -30,4 +31,20 @@ $webPage->addToBody(
 );
 ```
 
-It guarantees that your tags are closed and nested properly. There's a function corresponding to each HTML5 element. `div()`, `h3()`, `head()`, etc. Since `var` is a PHP keyword, the function for that tag has an underscore: `var_()`.
+renders as:
+
+```
+<div class=row>
+	<div class=column>
+		<p attributes>
+			content
+		</p>
+		<ul>
+			<li>item 1</li>
+			<li>item 2</li>
+			<li>item 3</li>
+		</ul>
+	</div>
+</div>
+	
+```
