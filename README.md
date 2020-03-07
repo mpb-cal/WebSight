@@ -4,6 +4,10 @@ A website anti-framework
 Create a WebPage and pass it around, add stuff to it, then display it. CSS, JS, HEAD stuff, etc., can be added at any point.
 
 ```
+namespace WebSight;
+
+require_once 'WebSight/WebPage.php';
+
 $webPage = new WebPage;
 $webPage->setTitle( 'My Site' );
 $webPage->addToHead( 'head stuff' );
