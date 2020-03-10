@@ -1,7 +1,6 @@
 {
     "name": "mpb-cal/web-sight",
     "description": "A website anti-framework for PHP.",
-    "type": "library",
     "license": "MIT",
     "authors": [
         {
