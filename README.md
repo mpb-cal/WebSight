@@ -3,10 +3,14 @@ A website anti-framework
 
 Create a WebPage and pass it around, add stuff to it, then display it. CSS, JS, HEAD stuff, etc., can be added at any point.
 
+Install with:
+
+`composer require "mpb-cal/web-sight >=1"`
+
 ```
 namespace WebSight;
 
-require_once 'WebSight/WebPage.php';
+require_once __DIR__ . '/vendor/mpb-cal/web-sight/WebPage.php';`
 
 $webPage = new WebPage;
 $webPage->setTitle( 'My Site' );
