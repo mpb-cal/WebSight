@@ -1,0 +1,20 @@
+{
+    "name": "mpb-cal/web-sight",
+    "description": "A website anti-framework for PHP.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MPB",
+            "email": "steelstring@protonmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "WebSight\\": "/"
+        }
+    }
+}
