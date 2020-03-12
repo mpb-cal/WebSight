@@ -22,7 +22,7 @@ $webPage->addToBody( 'main body' );
 print $webPage->getOutput();
 ```
 
-HTML wrappers help you write HTML. It guarantees that your tags are closed and nested properly, without having to write the tag name twice. There's a function corresponding to each HTML5 element. `div()`, `h3()`, `head()`, etc. Since some tag names (e.g. `var`) are PHP keywords, the functions for those tags have underscores, like this: `var_()`. This applies to `dl_, header_, link_, and time_`.
+HTML wrappers help you write HTML. It guarantees that your tags are closed and nested properly, without having to write the tag name twice. There's a function corresponding to each HTML5 element, e.g. `div()`, `h3()`, `head()`, etc. Since some tag names (e.g. `var`) are PHP keywords, the functions for those tags have underscores, like this: `var_()`. This applies to `dl_, header_, link_, and time_`.
 
 ```
 $webPage->addToBody( 
