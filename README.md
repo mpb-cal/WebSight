@@ -3,7 +3,7 @@ A website anti-framework
 
 Create a WebPage and pass it around, add stuff to it, then display it. CSS, JS, HEAD stuff, etc., can be added at any point.
 
-Install with:
+To install:
 
 `composer require "mpb-cal/web-sight >=1"`
 
