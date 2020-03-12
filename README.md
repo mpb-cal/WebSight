@@ -26,7 +26,7 @@ HTML wrappers help you write HTML. It guarantees that your tags are closed and n
 
 ```
 $webPage->addToBody( 
-	div( 'class=row',
+	div( 'class=row id=mainRow',
 		div( 'class=column',
 			p( 'attributes go here',
 				'content goes here'
@@ -36,6 +36,7 @@ $webPage->addToBody(
 				. li( '', item 2' )
 				. li( '', 'item 3' )
 			)
+			. a( 'href="http://www.example.com"', 'Click Here' )
 		)
 	)
 );
@@ -44,7 +45,7 @@ $webPage->addToBody(
 renders as:
 
 ```
-<div class=row>
+<div class=row id=mainRow>
 	<div class=column>
 		<p attributes>
 			content
@@ -54,6 +55,7 @@ renders as:
 			<li>item 2</li>
 			<li>item 3</li>
 		</ul>
+		<a href="http://www.example.com">Click Here</a>
 	</div>
 </div>
 	
