@@ -7,6 +7,8 @@ Install with:
 
 `composer require "mpb-cal/web-sight >=1"`
 
+To use:
+
 ```
 namespace WebSight;
 
