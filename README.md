@@ -32,7 +32,7 @@ $webPage->addToBody(
 				'content goes here'
 			)
 			. ul(
-				li( '', 'item 1' )
+				li( '', 'item 1' )   // don't forget the '' even if there are no properties!
 				. li( '', item 2' )
 				. li( '', 'item 3' )
 			)
