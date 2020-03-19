@@ -12,7 +12,7 @@ To use:
 ```
 namespace WebSight;
 
-require_once __DIR__ . '/vendor/mpb-cal/web-sight/WebPage.php';`
+require_once __DIR__ . '/vendor/mpb-cal/web-sight/WebPage.php';
 
 $webPage = new WebPage;
 $webPage->setTitle( 'My Site' );
