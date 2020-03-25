@@ -2,7 +2,7 @@
 
 namespace WebSight;
 
-require_once 'Session.php';
+require_once __DIR__ . '/Session.php';
 
 
 define( 'SV_MISSING_FIELDS', 'missingFields' );

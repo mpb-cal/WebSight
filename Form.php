@@ -36,8 +36,8 @@ if ($myForm->wasSubmitted()) {
 
 */
 
-require_once 'utilities.php';
-require_once 'MissingFields.php';
+require_once __DIR__ . '/utilities.php';
+require_once __DIR__ . '/MissingFields.php';
 
 $i = 1;
 define( 'INPUT_TYPE_TEXT', $i++ );

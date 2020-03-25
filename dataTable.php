@@ -2,8 +2,8 @@
 
 namespace WebSight;
 
-require_once 'utilities.php';
-require_once 'WebPage.php';
+require_once __DIR__ . '/utilities.php';
+require_once __DIR__ . '/WebPage.php';
 
 const DATATABLES_CSS = '//cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.css';
 const RESPONSIVE_CSS = '//cdn.datatables.net/responsive/2.1.0/css/responsive.dataTables.min.css';

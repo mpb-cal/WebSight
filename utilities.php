@@ -2,8 +2,8 @@
 
 namespace WebSight;
 
-require_once 'HTML-wrappers.php';
-require_once 'bootstrap.php';
+require_once __DIR__ . '/HTML-wrappers.php';
+require_once __DIR__ . '/bootstrap.php';
 
 
 function sendNoCacheHeaders()

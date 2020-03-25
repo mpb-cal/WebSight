@@ -2,7 +2,7 @@
 
 namespace WebSight;
 
-require_once 'utilities.php';
+require_once __DIR__ . '/utilities.php';
 
 class JS
 {
