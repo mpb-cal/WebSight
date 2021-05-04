@@ -2,7 +2,7 @@
 
 namespace WebSight;
 
-require_once 'utilities.php';
+require_once __DIR__ . '/utilities.php';
 
 class JS
 {
@@ -28,13 +28,29 @@ class JS
 	}
 
 
+	static public function addBabelFile( $jsFile )
+	{
+		self::$jsFiles .= self::makeBabelFile( $jsFile );
+	}
+
+
+	static public function addJSModule( $jsFile )
+	{
+		self::$jsFiles .= self::makeJSModule( $jsFile );
+	}
+
+
 	static public function makeJS()
 	{
 		return
 			NL . NL
 			. self::makeJSFiles()
 			. NL . script( '', self::$js )
-			. NL . script( '', NL . "jQuery(function($) {" . NL . self::$documentReady . NL . "});" . NL )
+			. (self::$documentReady ?
+          NL . script( '', NL . "jQuery(function($) {" . NL . self::$documentReady . NL . "});" . NL )
+        :
+          ''
+      )
 			. NL . NL
 		;
 	}
@@ -52,6 +68,22 @@ class JS
 	{
 		return
 			script( "src='$filename'" ) . NL
+		;
+	}
+
+
+	static private function makeJSModule( $filename )
+	{
+		return
+			script( "src='$filename' type='module'" ) . NL
+		;
+	}
+
+
+	static private function makeBabelFile( $filename )
+	{
+		return
+			script( "src='$filename' type='text/babel'" ) . NL
 		;
 	}
 

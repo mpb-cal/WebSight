@@ -2,7 +2,7 @@
 
 namespace WebSight;
 
-require_once 'Session.php';
+require_once __DIR__ . '/Session.php';
 
 // SV_ = session variable
 define( 'SV_USER_MESSAGE', 'userMessage' );

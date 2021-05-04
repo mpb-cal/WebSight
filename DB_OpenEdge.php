@@ -2,7 +2,7 @@
 
 namespace WebSight;
 
-require_once 'DB.php';
+require_once __DIR__ . '/DB.php';
 
 
 class DB_OpenEdge extends DB

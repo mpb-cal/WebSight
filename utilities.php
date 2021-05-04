@@ -2,8 +2,18 @@
 
 namespace WebSight;
 
-require_once 'HTML-wrappers.php';
-require_once 'bootstrap.php';
+require_once __DIR__ . '/HTML-wrappers.php';
+require_once __DIR__ . '/bootstrap.php';
+
+
+function arr2UL( $arr = [] )
+{
+  return ul( '',
+    array_reduce( $arr, function($c, $i) {
+      return $c . li( '', $i );
+    } )
+  );
+}
 
 
 function sendNoCacheHeaders()
@@ -720,6 +730,12 @@ function isSecure()
 {
 	if (isset( $_SERVER['HTTPS'] ) and $_SERVER['HTTPS']) return true;
 	return false;
+}
+
+
+function newWindowLink( $url, $text, $atts = '' )
+{
+	return a( "href=\"$url\" $atts target='_blank'", $text );
 }
 
 
