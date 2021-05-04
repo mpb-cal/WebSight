@@ -9,14 +9,12 @@
 
 namespace WebSight;
 
-function element( $name, $atts = '', $contents = '', $end_tag = true )
+function element($name, $atts = '', $contents = '', $end_tag = true)
 {
-	if (is_array( $contents ))
-	{
+	if (is_array($contents)) {
 		$e = '';
-		foreach ($contents as $c)
-		{
-			$e .= element( $name, $atts, $c, $end_tag );
+		foreach ($contents as $c) {
+			$e .= element($name, $atts, $c, $end_tag);
 		}
 		return $e;
 	}
@@ -29,12 +27,16 @@ function element( $name, $atts = '', $contents = '', $end_tag = true )
 		$contents = "" . $contents . "";
 	}
 
-	return "<$name$atts>" . $contents . ($end_tag ? "</$name>" : "") . "";
+  if ($end_tag) {
+    return "<$name$atts>$contents</$name>" . "";
+  } else {
+    return "<$name$atts />" . "";
+  }
 }
 
 
 
-function a( $atts = '', $contents = '' )
+function a($atts = '', $contents = '')
 {
 	return element( 
 		'a', 
@@ -45,7 +47,7 @@ function a( $atts = '', $contents = '' )
 }
 
 
-function abbr( $atts = '', $contents = '' )
+function abbr($atts = '', $contents = '')
 {
 	return element( 
 		'abbr', 
@@ -56,7 +58,7 @@ function abbr( $atts = '', $contents = '' )
 }
 
 
-function address( $atts = '', $contents = '' )
+function address($atts = '', $contents = '')
 {
 	return element( 
 		'address', 
@@ -67,7 +69,7 @@ function address( $atts = '', $contents = '' )
 }
 
 
-function area( $atts = '', $contents = '' )
+function area($atts = '', $contents = '')
 {
 	return element( 
 		'area', 
@@ -78,7 +80,7 @@ function area( $atts = '', $contents = '' )
 }
 
 
-function article( $atts = '', $contents = '' )
+function article($atts = '', $contents = '')
 {
 	return element( 
 		'article', 
@@ -89,7 +91,7 @@ function article( $atts = '', $contents = '' )
 }
 
 
-function aside( $atts = '', $contents = '' )
+function aside($atts = '', $contents = '')
 {
 	return element( 
 		'aside', 
@@ -100,7 +102,7 @@ function aside( $atts = '', $contents = '' )
 }
 
 
-function audio( $atts = '', $contents = '' )
+function audio($atts = '', $contents = '')
 {
 	return element( 
 		'audio', 
@@ -111,7 +113,7 @@ function audio( $atts = '', $contents = '' )
 }
 
 
-function b( $atts = '', $contents = '' )
+function b($atts = '', $contents = '')
 {
 	return element( 
 		'b', 
@@ -122,7 +124,7 @@ function b( $atts = '', $contents = '' )
 }
 
 
-function base( $atts = '', $contents = '' )
+function base($atts = '', $contents = '')
 {
 	return element( 
 		'base', 
@@ -133,7 +135,7 @@ function base( $atts = '', $contents = '' )
 }
 
 
-function bb( $atts = '', $contents = '' )
+function bb($atts = '', $contents = '')
 {
 	return element( 
 		'bb', 
@@ -144,7 +146,7 @@ function bb( $atts = '', $contents = '' )
 }
 
 
-function bdo( $atts = '', $contents = '' )
+function bdo($atts = '', $contents = '')
 {
 	return element( 
 		'bdo', 
@@ -155,7 +157,7 @@ function bdo( $atts = '', $contents = '' )
 }
 
 
-function blockquote( $atts = '', $contents = '' )
+function blockquote($atts = '', $contents = '')
 {
 	return element( 
 		'blockquote', 
@@ -166,7 +168,7 @@ function blockquote( $atts = '', $contents = '' )
 }
 
 
-function body( $atts = '', $contents = '' )
+function body($atts = '', $contents = '')
 {
 	return element( 
 		'body', 
@@ -177,7 +179,7 @@ function body( $atts = '', $contents = '' )
 }
 
 
-function br( $atts = '', $contents = '' )
+function br($atts = '', $contents = '')
 {
 	return element( 
 		'br', 
@@ -188,7 +190,7 @@ function br( $atts = '', $contents = '' )
 }
 
 
-function button( $atts = '', $contents = '' )
+function button($atts = '', $contents = '')
 {
 	return element( 
 		'button', 
@@ -199,7 +201,7 @@ function button( $atts = '', $contents = '' )
 }
 
 
-function canvas( $atts = '', $contents = '' )
+function canvas($atts = '', $contents = '')
 {
 	return element( 
 		'canvas', 
@@ -210,7 +212,7 @@ function canvas( $atts = '', $contents = '' )
 }
 
 
-function caption( $atts = '', $contents = '' )
+function caption($atts = '', $contents = '')
 {
 	return element( 
 		'caption', 
@@ -221,7 +223,7 @@ function caption( $atts = '', $contents = '' )
 }
 
 
-function cite( $atts = '', $contents = '' )
+function cite($atts = '', $contents = '')
 {
 	return element( 
 		'cite', 
@@ -232,7 +234,7 @@ function cite( $atts = '', $contents = '' )
 }
 
 
-function code( $atts = '', $contents = '' )
+function code($atts = '', $contents = '')
 {
 	return element( 
 		'code', 
@@ -243,7 +245,7 @@ function code( $atts = '', $contents = '' )
 }
 
 
-function col( $atts = '', $contents = '' )
+function col($atts = '', $contents = '')
 {
 	return element( 
 		'col', 
@@ -254,7 +256,7 @@ function col( $atts = '', $contents = '' )
 }
 
 
-function colgroup( $atts = '', $contents = '' )
+function colgroup($atts = '', $contents = '')
 {
 	return element( 
 		'colgroup', 
@@ -265,18 +267,18 @@ function colgroup( $atts = '', $contents = '' )
 }
 
 
-function command( $atts = '', $contents = '' )
+function command($atts = '', $contents = '')
 {
 	return element( 
 		'command', 
 		$atts, 
 		$contents, 
-		false
+		true
 	);
 }
 
 
-function datagrid( $atts = '', $contents = '' )
+function datagrid($atts = '', $contents = '')
 {
 	return element( 
 		'datagrid', 
@@ -287,7 +289,7 @@ function datagrid( $atts = '', $contents = '' )
 }
 
 
-function datalist( $atts = '', $contents = '' )
+function datalist($atts = '', $contents = '')
 {
 	return element( 
 		'datalist', 
@@ -298,7 +300,7 @@ function datalist( $atts = '', $contents = '' )
 }
 
 
-function dd( $atts = '', $contents = '' )
+function dd($atts = '', $contents = '')
 {
 	return element( 
 		'dd', 
@@ -309,7 +311,7 @@ function dd( $atts = '', $contents = '' )
 }
 
 
-function del( $atts = '', $contents = '' )
+function del($atts = '', $contents = '')
 {
 	return element( 
 		'del', 
@@ -320,7 +322,7 @@ function del( $atts = '', $contents = '' )
 }
 
 
-function details( $atts = '', $contents = '' )
+function details($atts = '', $contents = '')
 {
 	return element( 
 		'details', 
@@ -331,7 +333,7 @@ function details( $atts = '', $contents = '' )
 }
 
 
-function dfn( $atts = '', $contents = '' )
+function dfn($atts = '', $contents = '')
 {
 	return element( 
 		'dfn', 
@@ -342,7 +344,7 @@ function dfn( $atts = '', $contents = '' )
 }
 
 
-function dialog( $atts = '', $contents = '' )
+function dialog($atts = '', $contents = '')
 {
 	return element( 
 		'dialog', 
@@ -353,7 +355,7 @@ function dialog( $atts = '', $contents = '' )
 }
 
 
-function div( $atts = '', $contents = '' )
+function div($atts = '', $contents = '')
 {
 	return element( 
 		'div', 
@@ -364,7 +366,7 @@ function div( $atts = '', $contents = '' )
 }
 
 
-function dl_( $atts = '', $contents = '' )
+function dl_($atts = '', $contents = '')
 {
 	return element( 
 		'dl', 
@@ -375,7 +377,7 @@ function dl_( $atts = '', $contents = '' )
 }
 
 
-function dt( $atts = '', $contents = '' )
+function dt($atts = '', $contents = '')
 {
 	return element( 
 		'dt', 
@@ -386,7 +388,7 @@ function dt( $atts = '', $contents = '' )
 }
 
 
-function em( $atts = '', $contents = '' )
+function em($atts = '', $contents = '')
 {
 	return element( 
 		'em', 
@@ -397,7 +399,7 @@ function em( $atts = '', $contents = '' )
 }
 
 
-function embed( $atts = '', $contents = '' )
+function embed($atts = '', $contents = '')
 {
 	return element( 
 		'embed', 
@@ -408,7 +410,7 @@ function embed( $atts = '', $contents = '' )
 }
 
 
-function fieldset( $atts = '', $contents = '' )
+function fieldset($atts = '', $contents = '')
 {
 	return element( 
 		'fieldset', 
@@ -419,7 +421,7 @@ function fieldset( $atts = '', $contents = '' )
 }
 
 
-function figure( $atts = '', $contents = '' )
+function figure($atts = '', $contents = '')
 {
 	return element( 
 		'figure', 
@@ -430,7 +432,7 @@ function figure( $atts = '', $contents = '' )
 }
 
 
-function footer( $atts = '', $contents = '' )
+function footer($atts = '', $contents = '')
 {
 	return element( 
 		'footer', 
@@ -441,7 +443,7 @@ function footer( $atts = '', $contents = '' )
 }
 
 
-function form( $atts = '', $contents = '' )
+function form($atts = '', $contents = '')
 {
 	return element( 
 		'form', 
@@ -452,7 +454,7 @@ function form( $atts = '', $contents = '' )
 }
 
 
-function h1( $atts = '', $contents = '' )
+function h1($atts = '', $contents = '')
 {
 	return element( 
 		'h1', 
@@ -463,7 +465,7 @@ function h1( $atts = '', $contents = '' )
 }
 
 
-function h2( $atts = '', $contents = '' )
+function h2($atts = '', $contents = '')
 {
 	return element( 
 		'h2', 
@@ -474,7 +476,7 @@ function h2( $atts = '', $contents = '' )
 }
 
 
-function h3( $atts = '', $contents = '' )
+function h3($atts = '', $contents = '')
 {
 	return element( 
 		'h3', 
@@ -485,7 +487,7 @@ function h3( $atts = '', $contents = '' )
 }
 
 
-function h4( $atts = '', $contents = '' )
+function h4($atts = '', $contents = '')
 {
 	return element( 
 		'h4', 
@@ -496,7 +498,7 @@ function h4( $atts = '', $contents = '' )
 }
 
 
-function h5( $atts = '', $contents = '' )
+function h5($atts = '', $contents = '')
 {
 	return element( 
 		'h5', 
@@ -507,7 +509,7 @@ function h5( $atts = '', $contents = '' )
 }
 
 
-function h6( $atts = '', $contents = '' )
+function h6($atts = '', $contents = '')
 {
 	return element( 
 		'h6', 
@@ -518,7 +520,7 @@ function h6( $atts = '', $contents = '' )
 }
 
 
-function head( $atts = '', $contents = '' )
+function head($atts = '', $contents = '')
 {
 	return element( 
 		'head', 
@@ -529,7 +531,7 @@ function head( $atts = '', $contents = '' )
 }
 
 
-function header_( $atts = '', $contents = '' )
+function header_($atts = '', $contents = '')
 {
 	return element( 
 		'header', 
@@ -540,7 +542,7 @@ function header_( $atts = '', $contents = '' )
 }
 
 
-function hgroup( $atts = '', $contents = '' )
+function hgroup($atts = '', $contents = '')
 {
 	return element( 
 		'hgroup', 
@@ -551,7 +553,7 @@ function hgroup( $atts = '', $contents = '' )
 }
 
 
-function hr( $atts = '', $contents = '' )
+function hr($atts = '', $contents = '')
 {
 	return element( 
 		'hr', 
@@ -562,7 +564,7 @@ function hr( $atts = '', $contents = '' )
 }
 
 
-function html( $atts = '', $contents = '' )
+function html($atts = '', $contents = '')
 {
 	return element( 
 		'html', 
@@ -573,7 +575,7 @@ function html( $atts = '', $contents = '' )
 }
 
 
-function i( $atts = '', $contents = '' )
+function i($atts = '', $contents = '')
 {
 	return element( 
 		'i', 
@@ -584,7 +586,7 @@ function i( $atts = '', $contents = '' )
 }
 
 
-function iframe( $atts = '', $contents = '' )
+function iframe($atts = '', $contents = '')
 {
 	return element( 
 		'iframe', 
@@ -595,7 +597,7 @@ function iframe( $atts = '', $contents = '' )
 }
 
 
-function img( $atts = '', $contents = '' )
+function img($atts = '', $contents = '')
 {
 	return element( 
 		'img', 
@@ -606,7 +608,7 @@ function img( $atts = '', $contents = '' )
 }
 
 
-function input( $atts = '', $contents = '' )
+function input($atts = '', $contents = '')
 {
 	return element( 
 		'input', 
@@ -617,7 +619,7 @@ function input( $atts = '', $contents = '' )
 }
 
 
-function ins( $atts = '', $contents = '' )
+function ins($atts = '', $contents = '')
 {
 	return element( 
 		'ins', 
@@ -628,7 +630,7 @@ function ins( $atts = '', $contents = '' )
 }
 
 
-function kbd( $atts = '', $contents = '' )
+function kbd($atts = '', $contents = '')
 {
 	return element( 
 		'kbd', 
@@ -639,7 +641,7 @@ function kbd( $atts = '', $contents = '' )
 }
 
 
-function label( $atts = '', $contents = '' )
+function label($atts = '', $contents = '')
 {
 	return element( 
 		'label', 
@@ -650,7 +652,7 @@ function label( $atts = '', $contents = '' )
 }
 
 
-function legend( $atts = '', $contents = '' )
+function legend($atts = '', $contents = '')
 {
 	return element( 
 		'legend', 
@@ -661,7 +663,7 @@ function legend( $atts = '', $contents = '' )
 }
 
 
-function li( $atts = '', $contents = '' )
+function li($atts = '', $contents = '')
 {
 	return element( 
 		'li', 
@@ -672,7 +674,7 @@ function li( $atts = '', $contents = '' )
 }
 
 
-function link_( $atts = '', $contents = '' )
+function link_($atts = '', $contents = '')
 {
 	return element( 
 		'link', 
@@ -683,7 +685,7 @@ function link_( $atts = '', $contents = '' )
 }
 
 
-function map( $atts = '', $contents = '' )
+function map($atts = '', $contents = '')
 {
 	return element( 
 		'map', 
@@ -694,7 +696,7 @@ function map( $atts = '', $contents = '' )
 }
 
 
-function mark( $atts = '', $contents = '' )
+function mark($atts = '', $contents = '')
 {
 	return element( 
 		'mark', 
@@ -705,7 +707,7 @@ function mark( $atts = '', $contents = '' )
 }
 
 
-function menu( $atts = '', $contents = '' )
+function menu($atts = '', $contents = '')
 {
 	return element( 
 		'menu', 
@@ -716,7 +718,7 @@ function menu( $atts = '', $contents = '' )
 }
 
 
-function meta( $atts = '', $contents = '' )
+function meta($atts = '', $contents = '')
 {
 	return element( 
 		'meta', 
@@ -727,7 +729,7 @@ function meta( $atts = '', $contents = '' )
 }
 
 
-function meter( $atts = '', $contents = '' )
+function meter($atts = '', $contents = '')
 {
 	return element( 
 		'meter', 
@@ -738,7 +740,7 @@ function meter( $atts = '', $contents = '' )
 }
 
 
-function nav( $atts = '', $contents = '' )
+function nav($atts = '', $contents = '')
 {
 	return element( 
 		'nav', 
@@ -749,7 +751,7 @@ function nav( $atts = '', $contents = '' )
 }
 
 
-function noscript( $atts = '', $contents = '' )
+function noscript($atts = '', $contents = '')
 {
 	return element( 
 		'noscript', 
@@ -760,7 +762,7 @@ function noscript( $atts = '', $contents = '' )
 }
 
 
-function object( $atts = '', $contents = '' )
+function object($atts = '', $contents = '')
 {
 	return element( 
 		'object', 
@@ -771,7 +773,7 @@ function object( $atts = '', $contents = '' )
 }
 
 
-function ol( $atts = '', $contents = '' )
+function ol($atts = '', $contents = '')
 {
 	return element( 
 		'ol', 
@@ -782,7 +784,7 @@ function ol( $atts = '', $contents = '' )
 }
 
 
-function optgroup( $atts = '', $contents = '' )
+function optgroup($atts = '', $contents = '')
 {
 	return element( 
 		'optgroup', 
@@ -793,7 +795,7 @@ function optgroup( $atts = '', $contents = '' )
 }
 
 
-function option( $atts = '', $contents = '' )
+function option($atts = '', $contents = '')
 {
 	return element( 
 		'option', 
@@ -804,7 +806,7 @@ function option( $atts = '', $contents = '' )
 }
 
 
-function output( $atts = '', $contents = '' )
+function output($atts = '', $contents = '')
 {
 	return element( 
 		'output', 
@@ -815,7 +817,7 @@ function output( $atts = '', $contents = '' )
 }
 
 
-function p( $atts = '', $contents = '' )
+function p($atts = '', $contents = '')
 {
 	return element( 
 		'p', 
@@ -826,7 +828,7 @@ function p( $atts = '', $contents = '' )
 }
 
 
-function param( $atts = '', $contents = '' )
+function param($atts = '', $contents = '')
 {
 	return element( 
 		'param', 
@@ -837,7 +839,7 @@ function param( $atts = '', $contents = '' )
 }
 
 
-function pre( $atts = '', $contents = '' )
+function pre($atts = '', $contents = '')
 {
 	return element( 
 		'pre', 
@@ -848,7 +850,7 @@ function pre( $atts = '', $contents = '' )
 }
 
 
-function progress( $atts = '', $contents = '' )
+function progress($atts = '', $contents = '')
 {
 	return element( 
 		'progress', 
@@ -859,7 +861,7 @@ function progress( $atts = '', $contents = '' )
 }
 
 
-function q( $atts = '', $contents = '' )
+function q($atts = '', $contents = '')
 {
 	return element( 
 		'q', 
@@ -870,7 +872,7 @@ function q( $atts = '', $contents = '' )
 }
 
 
-function rp( $atts = '', $contents = '' )
+function rp($atts = '', $contents = '')
 {
 	return element( 
 		'rp', 
@@ -881,7 +883,7 @@ function rp( $atts = '', $contents = '' )
 }
 
 
-function rt( $atts = '', $contents = '' )
+function rt($atts = '', $contents = '')
 {
 	return element( 
 		'rt', 
@@ -892,7 +894,7 @@ function rt( $atts = '', $contents = '' )
 }
 
 
-function ruby( $atts = '', $contents = '' )
+function ruby($atts = '', $contents = '')
 {
 	return element( 
 		'ruby', 
@@ -903,7 +905,7 @@ function ruby( $atts = '', $contents = '' )
 }
 
 
-function samp( $atts = '', $contents = '' )
+function samp($atts = '', $contents = '')
 {
 	return element( 
 		'samp', 
@@ -914,7 +916,7 @@ function samp( $atts = '', $contents = '' )
 }
 
 
-function script( $atts = '', $contents = '' )
+function script($atts = '', $contents = '')
 {
 	return element( 
 		'script', 
@@ -925,7 +927,7 @@ function script( $atts = '', $contents = '' )
 }
 
 
-function section( $atts = '', $contents = '' )
+function section($atts = '', $contents = '')
 {
 	return element( 
 		'section', 
@@ -936,7 +938,7 @@ function section( $atts = '', $contents = '' )
 }
 
 
-function select( $atts = '', $contents = '' )
+function select($atts = '', $contents = '')
 {
 	return element( 
 		'select', 
@@ -947,7 +949,7 @@ function select( $atts = '', $contents = '' )
 }
 
 
-function small( $atts = '', $contents = '' )
+function small($atts = '', $contents = '')
 {
 	return element( 
 		'small', 
@@ -958,7 +960,7 @@ function small( $atts = '', $contents = '' )
 }
 
 
-function source( $atts = '', $contents = '' )
+function source($atts = '', $contents = '')
 {
 	return element( 
 		'source', 
@@ -969,7 +971,7 @@ function source( $atts = '', $contents = '' )
 }
 
 
-function span( $atts = '', $contents = '' )
+function span($atts = '', $contents = '')
 {
 	return element( 
 		'span', 
@@ -980,7 +982,7 @@ function span( $atts = '', $contents = '' )
 }
 
 
-function strong( $atts = '', $contents = '' )
+function strong($atts = '', $contents = '')
 {
 	return element( 
 		'strong', 
@@ -991,7 +993,7 @@ function strong( $atts = '', $contents = '' )
 }
 
 
-function style( $atts = '', $contents = '' )
+function style($atts = '', $contents = '')
 {
 	return element( 
 		'style', 
@@ -1002,7 +1004,7 @@ function style( $atts = '', $contents = '' )
 }
 
 
-function sub( $atts = '', $contents = '' )
+function sub($atts = '', $contents = '')
 {
 	return element( 
 		'sub', 
@@ -1013,7 +1015,7 @@ function sub( $atts = '', $contents = '' )
 }
 
 
-function sup( $atts = '', $contents = '' )
+function sup($atts = '', $contents = '')
 {
 	return element( 
 		'sup', 
@@ -1024,7 +1026,7 @@ function sup( $atts = '', $contents = '' )
 }
 
 
-function table( $atts = '', $contents = '' )
+function table($atts = '', $contents = '')
 {
 	return element( 
 		'table', 
@@ -1035,7 +1037,7 @@ function table( $atts = '', $contents = '' )
 }
 
 
-function tbody( $atts = '', $contents = '' )
+function tbody($atts = '', $contents = '')
 {
 	return element( 
 		'tbody', 
@@ -1046,7 +1048,7 @@ function tbody( $atts = '', $contents = '' )
 }
 
 
-function td( $atts = '', $contents = '' )
+function td($atts = '', $contents = '')
 {
 	return element( 
 		'td', 
@@ -1057,7 +1059,7 @@ function td( $atts = '', $contents = '' )
 }
 
 
-function textarea( $atts = '', $contents = '' )
+function textarea($atts = '', $contents = '')
 {
 	return element( 
 		'textarea', 
@@ -1068,7 +1070,7 @@ function textarea( $atts = '', $contents = '' )
 }
 
 
-function tfoot( $atts = '', $contents = '' )
+function tfoot($atts = '', $contents = '')
 {
 	return element( 
 		'tfoot', 
@@ -1079,7 +1081,7 @@ function tfoot( $atts = '', $contents = '' )
 }
 
 
-function th( $atts = '', $contents = '' )
+function th($atts = '', $contents = '')
 {
 	return element( 
 		'th', 
@@ -1090,7 +1092,7 @@ function th( $atts = '', $contents = '' )
 }
 
 
-function thead( $atts = '', $contents = '' )
+function thead($atts = '', $contents = '')
 {
 	return element( 
 		'thead', 
@@ -1101,7 +1103,7 @@ function thead( $atts = '', $contents = '' )
 }
 
 
-function time_( $atts = '', $contents = '' )
+function time_($atts = '', $contents = '')
 {
 	return element( 
 		'time', 
@@ -1112,7 +1114,7 @@ function time_( $atts = '', $contents = '' )
 }
 
 
-function title( $atts = '', $contents = '' )
+function title($atts = '', $contents = '')
 {
 	return element( 
 		'title', 
@@ -1123,7 +1125,7 @@ function title( $atts = '', $contents = '' )
 }
 
 
-function tr( $atts = '', $contents = '' )
+function tr($atts = '', $contents = '')
 {
 	return element( 
 		'tr', 
@@ -1134,7 +1136,7 @@ function tr( $atts = '', $contents = '' )
 }
 
 
-function ul( $atts = '', $contents = '' )
+function ul($atts = '', $contents = '')
 {
 	return element( 
 		'ul', 
@@ -1145,7 +1147,7 @@ function ul( $atts = '', $contents = '' )
 }
 
 
-function var_( $atts = '', $contents = '' )
+function var_($atts = '', $contents = '')
 {
 	return element( 
 		'var', 
@@ -1156,7 +1158,7 @@ function var_( $atts = '', $contents = '' )
 }
 
 
-function video( $atts = '', $contents = '' )
+function video($atts = '', $contents = '')
 {
 	return element( 
 		'video', 

@@ -15,7 +15,7 @@ class WebPage
 
 	public function __construct()
 	{
-		$this->addToHead( meta( "charset='UTF-8'" ) . NL );
+		$this->addToHead( meta( "charset='UTF-8'" ) );
 	}
 
 
@@ -29,7 +29,8 @@ class WebPage
 		return
 			'<!DOCTYPE html>' . NL
 			. html( 'class="" lang=""',	// no-js replaced with js by modernizr?
-				head( '', $this->head )
+        NL
+				. head( '', NL . $this->head )
 				. body( $this->bodyAtts, $this->body )
 			)
 		;
@@ -50,7 +51,7 @@ class WebPage
 
 	public function addToHead( $html = '' )
 	{
-		$this->head .= $html;
+		$this->head .= $html . NL;
 	}
 
 
@@ -72,7 +73,6 @@ class WebPage
 			link_(
 				"rel='stylesheet' href='$href' type='text/css' media='all'"
 			)
-			. NL
 		);
 	}
 
