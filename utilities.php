@@ -272,6 +272,11 @@ function openWindow( $url )
 }
 
 
+function pI()
+{
+    po(get_included_files());
+}
+
 function pC()
 {
 	printCGIVars();
